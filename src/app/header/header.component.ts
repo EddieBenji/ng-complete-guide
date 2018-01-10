@@ -8,15 +8,9 @@ import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@ang
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() featureSelected = new EventEmitter<string>();
-
   constructor() {
   }
 
   ngOnInit() {
-  }
-
-  onSelect(feature: string) {
-    this.featureSelected.emit(feature);
   }
 }
