@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: [ './shopping-list.component.css' ],
+  styleUrls: ['./shopping-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
@@ -25,5 +25,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onEditItem(index: number) {
+    this.shoppingListService.startedEditing.next(index);
   }
 }
