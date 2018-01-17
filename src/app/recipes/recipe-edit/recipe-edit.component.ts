@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe.service';
 
@@ -15,7 +15,8 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService) {
+              private recipeService: RecipeService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -39,8 +40,8 @@ export class RecipeEditComponent implements OnInit {
       recipeName = recipe.name;
       recipeImgPath = recipe.imagePath;
       recipeDescription = recipe.description;
-      if (recipe.ingredientes.length > 0) {
-        for (const ingredient of recipe.ingredientes) {
+      if (recipe.ingredients.length > 0) {
+        for (const ingredient of recipe.ingredients) {
           recipeIngredients.push(new FormGroup({
             'name': new FormControl(ingredient.name, [Validators.required]),
             'amount': new FormControl(ingredient.amount, [
@@ -60,7 +61,15 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    if (this.editMode) {
+      // Due to we use the same names as the model in the form, we can simply pass the
+      // the value of the form!
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    } else {
+      // Due to we use the same names as the model in the form, we can simply pass the
+      // the value of the form!
+      this.recipeService.addRecipe(this.recipeForm.value);
+    }
   }
 
   get formIngredientsData(): FormArray {
@@ -76,4 +85,9 @@ export class RecipeEditComponent implements OnInit {
     }));
   }
 
+  onCancel() {
+    this.recipeForm.reset();
+    this.editMode = false;
+    this.router.navigate(['/recipes']);
+  }
 }

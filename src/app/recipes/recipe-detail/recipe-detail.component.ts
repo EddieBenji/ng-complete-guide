@@ -7,7 +7,7 @@ import { RecipeService } from '../recipe.service';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: [ './recipe-detail.component.css' ],
+  styleUrls: ['./recipe-detail.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class RecipeDetailComponent implements OnInit {
@@ -22,19 +22,24 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
-        this.id = +params[ 'id' ];
+        this.id = +params['id'];
         this.recipe = this.recipeService.getRecipe(this.id);
       }
     );
   }
 
   onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredientes);
+    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 
   onEditRecipe() {
     // It will append 'edit' to the current route!
-    this.router.navigate([ 'edit' ], { relativeTo: this.route });
+    this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  onDelete() {
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['/recipes']);
   }
 
 }
