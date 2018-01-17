@@ -5,7 +5,9 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="pull-right">
-            <button class="btn btn-success" type="submit">Save</button>
+            <button class="btn btn-success" type="submit"
+                    [disabled]="recipeForm.invalid">Save
+            </button>
             <button class="btn btn-danger" type="button">Cancel</button>
           </div>
         </div>
@@ -57,11 +59,20 @@
       </div>
 
 
-      <div class="row">
+      <div class="row form-array-section">
         <div class="col-xs-12" formArrayName="ingredients">
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-success" (click)="onAddIngredient()"
+                      type="button">Add Ingredient
+              </button>
+            </div>
+          </div>
+          <hr>
           <div
             class="row"
-            *ngFor="let ingredientCtrl of recipeForm.get('ingredients').controls; let i = index"
+            *ngFor="let ingredientCtrl of formIngredientsData.controls; let i = index"
+            style="margin-top:10px;"
             [formGroupName]="i">
             <div class="col-xs-8">
               <input type="text"
