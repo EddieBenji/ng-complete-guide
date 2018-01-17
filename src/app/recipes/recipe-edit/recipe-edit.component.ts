@@ -70,6 +70,7 @@ export class RecipeEditComponent implements OnInit {
       // the value of the form!
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+    this.onCancel();
   }
 
   get formIngredientsData(): FormArray {
@@ -88,6 +89,6 @@ export class RecipeEditComponent implements OnInit {
   onCancel() {
     this.recipeForm.reset();
     this.editMode = false;
-    this.router.navigate(['/recipes']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }
