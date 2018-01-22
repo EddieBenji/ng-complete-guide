@@ -8,7 +8,7 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 
 const recipesRoutes: Routes = [
   {
-    path: 'recipes', component: RecipesComponent,
+    path: '', component: RecipesComponent,
     children: [
       { path: '', component: RecipeStartComponent },
       // First 'new' then ':id', due to angular manages the routes hierarchical
