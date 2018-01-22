@@ -13,7 +13,7 @@ import { DataStorageService } from '../../shared/data-storage.service';
 export class HeaderComponent implements OnInit {
 
   constructor(private storageService: DataStorageService,
-              public authService: AuthService) {
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -31,5 +31,9 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  isAuthenticated(){
+    return this.authService.isAuthenticated();
   }
 }

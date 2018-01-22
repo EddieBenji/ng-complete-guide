@@ -20,7 +20,7 @@ import { CoreModule } from './core/core.module';
     AuthModule,
     CoreModule
   ],
-º  /*
+  /*
   * The providers array was removed, because the core module already have them all.
   * And because is imported eagerly, the instances are the sames! (this does not happens
   * when you use lazy load on modules).
