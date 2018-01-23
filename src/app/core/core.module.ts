@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -10,6 +11,8 @@ import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { DataStorageService } from '../shared/data-storage.service';
+import { AuthInterceptor } from '../shared/auth.interceptor';
+import { LoggingInterceptor } from '../shared/logging.interceptor';
 
 @NgModule({
   imports: [
@@ -30,7 +33,9 @@ import { DataStorageService } from '../shared/data-storage.service';
     RecipeService, // It is used across the app this service, thus, we have to leave it here.
     DataStorageService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true }
   ],
 })
 export class CoreModule {

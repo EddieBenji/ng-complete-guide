@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
 import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from '../../shared/data-storage.service';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onStorageData() {
-    this.storageService.storageRecipe().subscribe(
+    this.storageService.storeRecipes().subscribe(
       (response: HttpResponse<any>) => console.log(response)
     );
   }
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
   }
 
-  isAuthenticated(){
+  isAuthenticated() {
     return this.authService.isAuthenticated();
   }
 }
