@@ -9,7 +9,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AuthGuard } from '../auth/auth-guard.service';
 import { AuthService } from '../auth/auth.service';
 import { RecipeService } from '../recipes/recipe.service';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthInterceptor } from '../shared/auth.interceptor';
 import { LoggingInterceptor } from '../shared/logging.interceptor';
@@ -29,7 +28,6 @@ import { LoggingInterceptor } from '../shared/logging.interceptor';
     HeaderComponent
   ],
   providers: [
-    ShoppingListService,
     RecipeService, // It is used across the app this service, thus, we have to leave it here.
     DataStorageService,
     AuthService,
