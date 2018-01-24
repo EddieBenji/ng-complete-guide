@@ -10,13 +10,16 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { recipeReducer } from './ngrx-store/recipe.reducers';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RecipesRoutingModule, // Routes!
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('recipes', recipeReducer)
   ],
   declarations: [
     RecipesComponent,
