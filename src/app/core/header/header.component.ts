@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from '../../shared/data-storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import * as fromAuth from '../../auth/ngrx-store/auth.reducers';
-import * as fromApp from '../../ngrx-store/app.reducers';
 import { Observable } from 'rxjs/Observable';
 
+import * as fromAuth from '../../auth/ngrx-store/auth.reducers';
+import * as fromApp from '../../ngrx-store/app.reducers';
+import * as AuthActions from '../../auth/ngrx-store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
   public authState: Observable<fromAuth.AuthState>;
 
   constructor(private storageService: DataStorageService,
-              private authService: AuthService,
               private store: Store<fromApp.AppState>) {
   }
 
@@ -37,6 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

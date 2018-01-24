@@ -15,12 +15,14 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
     case AuthActions.SIGN_UP:
     case AuthActions.SIGN_IN:
       return {
+        /*'...state' means like:
+        * token: state.token*/
         ...state,
         authenticated: true
       };
     case AuthActions.LOGOUT:
       return {
-        ...state,
+        // ...state,
         token: null,
         authenticated: false
       };
