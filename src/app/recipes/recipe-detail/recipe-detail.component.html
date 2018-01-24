@@ -22,7 +22,7 @@
         <li><a (click)="onAddToShoppingList()" style="cursor: pointer">To Shopping List</a></li>
         <li><a style="cursor: pointer" (click)="onEditRecipe()">Edit recipe</a></li>
         <li><a style="cursor: pointer" (click)="onDeleteRecipe()"
-               *ngIf="authService.isAuthenticated()">Delete recipe</a></li>
+               *ngIf="(store.select('auth')|async).authenticated">Delete recipe</a></li>
       </ul>
     </div>
   </div>

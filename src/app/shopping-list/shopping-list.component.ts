@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Ingredient } from '../shared/ingredient.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromShoppingList from './ngrx-store/shopping-list.reducers';
 import * as ShoppingListActions from './ngrx-store/shopping-list.actions';
+import * as fromApp from '../ngrx-store/app.reducers';
 
 
 @Component({
@@ -13,9 +13,9 @@ import * as ShoppingListActions from './ngrx-store/shopping-list.actions';
   encapsulation: ViewEncapsulation.None
 })
 export class ShoppingListComponent implements OnInit {
-  shoppingListState: Observable<{ ingredients: Ingredient[] }>;
+  shoppingListState: Observable<fromShoppingList.IngredientsState>;
 
-  constructor(private store: Store<fromShoppingList.AppState>) {
+  constructor(private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit() {
