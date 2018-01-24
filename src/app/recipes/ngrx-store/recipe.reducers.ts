@@ -1,6 +1,6 @@
 import { Recipe } from '../recipe.model';
-import * as AuthActions from '../../auth/ngrx-store/auth.actions';
 import { Ingredient } from '../../shared/ingredient.model';
+import * as RecipeActions from './recipe.actions';
 
 export interface RecipeFeatureState {
   recipes: RecipeState;
@@ -18,26 +18,40 @@ const initialState: RecipeState = {
   ]
 };
 
-export function recipeReducer(state = initialState, action: AuthActions.AuthActions) {
+export function recipeReducer(state = initialState, action: RecipeActions.RecipeActions) {
   switch (action.type) {
-    case AuthActions.SIGN_UP:
-    case AuthActions.SIGN_IN:
+    case RecipeActions.SET_RECIPES:
       return {
-        /*'...state' means like:
-        * token: state.token*/
         ...state,
-        authenticated: true
+        // Here we simply are returning a new variable for the recipes
+        recipes: [...action.payload]
       };
-    case AuthActions.LOGOUT:
+    case RecipeActions.ADD_RECIPE:
       return {
         ...state,
-        token: null,
-        authenticated: false
+        // Here we simply are merging (in a new variable), the previous recipes with the new ones.
+        recipes: [...state.recipes, action.payload]
       };
-    case AuthActions.SET_TOKEN:
+    case RecipeActions.UPDATE_RECIPE:
+      // Fetch the recipe to update:
+      const oldRecipe = state.recipes[action.payload.index];
+      // Updates the recipe saved in the state, with the updated one:
+      const recipeUpdated = {
+        ...oldRecipe, ...action.payload.recipe
+      };
+      // Retrieves all the recipes.
+      const recipes = [...state.recipes];
+      recipes[action.payload.index] = recipeUpdated;
       return {
         ...state,
-        token: action.payload
+        recipes: recipes
+      };
+    case RecipeActions.DELETE_RECIPE:
+      const oldRecipes = [...state.recipes];
+      oldRecipes.splice(action.payload, 1);
+      return {
+        ...state,
+        recipes: oldRecipes
       };
     default:
       return state;
