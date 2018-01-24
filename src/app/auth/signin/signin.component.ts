@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+
+import * as fromApp from '../../ngrx-store/app.reducers';
+import * as AuthActions from '../ngrx-store/auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-signin',
@@ -10,7 +13,7 @@ import { AuthService } from '../auth.service';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  constructor(private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit() {
@@ -19,7 +22,7 @@ export class SigninComponent implements OnInit {
   onSignIn(form: NgForm) {
     const email = form.value.email;
     const passw = form.value.password;
-    this.authService.signInUser(email, passw);
+    this.store.dispatch(new AuthActions.TrySignIn({ username: email, password: passw }));
   }
 
 }
