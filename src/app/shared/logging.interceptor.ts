@@ -8,7 +8,7 @@ export class LoggingInterceptor implements HttpInterceptor {
     // We intercept the response here!
     return next.handle(req).do(
       event => {
-        console.log('Logging interceptor ', event);
+        console.log('Response intercepted! ', event);
       }
     );
   }

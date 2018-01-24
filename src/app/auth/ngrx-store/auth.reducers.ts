@@ -22,7 +22,7 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
       };
     case AuthActions.LOGOUT:
       return {
-        // ...state,
+        ...state,
         token: null,
         authenticated: false
       };
