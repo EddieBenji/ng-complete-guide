@@ -5,7 +5,6 @@ import 'rxjs/add/operator/take';
 import { Store } from '@ngrx/store';
 
 import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
 import * as ShoppingListActions from '../../shopping-list/ngrx-store/shopping-list.actions';
 import * as fromRecipe from '../ngrx-store/recipe.reducers';
 import * as RecipeActions from '../ngrx-store/recipe.actions';
@@ -21,8 +20,7 @@ export class RecipeDetailComponent implements OnInit {
   recipeState: Observable<fromRecipe.RecipeState>;
   id: number;
 
-  constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
               public store: Store<fromRecipe.RecipeFeatureState>) {
   }

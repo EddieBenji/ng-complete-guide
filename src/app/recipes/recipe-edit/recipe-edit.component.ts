@@ -2,8 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-
-import { RecipeService } from '../recipe.service';
 import * as RecipeActions from '../ngrx-store/recipe.actions';
 import * as fromRecipe from '../ngrx-store/recipe.reducers';
 
@@ -19,7 +17,6 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService,
               private router: Router,
               public store: Store<fromRecipe.RecipeFeatureState>) {
   }
@@ -42,24 +39,26 @@ export class RecipeEditComponent implements OnInit {
 
     if (this.editMode) {
       this.store.select('recipes')
-        .take(1).subscribe((recipeState: fromRecipe.RecipeState) => {
-        const recipe = recipeState.recipes[this.id];
-        recipeName = recipe.name;
-        recipeImgPath = recipe.imagePath;
-        recipeDescription = recipe.description;
-        if (recipe.ingredients.length > 0) {
-          for (const ingredient of recipe.ingredients) {
-            recipeIngredients.push(new FormGroup({
-              'name': new FormControl(ingredient.name, [Validators.required]),
-              'amount': new FormControl(ingredient.amount, [
-                Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)
-              ])
-            }));
+        .take(1)
+        .subscribe(
+          (recipeState: fromRecipe.RecipeState) => {
+            const recipe = recipeState.recipes[this.id];
+            recipeName = recipe.name;
+            recipeImgPath = recipe.imagePath;
+            recipeDescription = recipe.description;
+            if (recipe.ingredients.length < 1) {
+              return;
+            }
+            for (const ingredient of recipe.ingredients) {
+              recipeIngredients.push(new FormGroup({
+                'name': new FormControl(ingredient.name, [Validators.required]),
+                'amount': new FormControl(ingredient.amount, [
+                  Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+              }));
+            }
           }
-        }
-      });
+        );
     }
-
     this.recipeForm = new FormGroup({
       'name': new FormControl(recipeName, [Validators.required]),
       'imagePath': new FormControl(recipeImgPath, [Validators.required]),

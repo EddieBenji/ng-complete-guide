@@ -26,13 +26,10 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    // return this.authService.isAuthenticated();
-    // For now, because we are changing everything to ngrx
     return this.store.select('auth')
       .take(1)
       .map((authState: fromAuth.AuthState) => {
         return authState && authState.authenticated;
       });
-    // return true;
   }
 }

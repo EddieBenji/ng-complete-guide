@@ -12,6 +12,8 @@ import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { recipeReducer } from './ngrx-store/recipe.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { RecipeEffects } from './ngrx-store/recipe.effects';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { recipeReducer } from './ngrx-store/recipe.reducers';
     ReactiveFormsModule,
     RecipesRoutingModule, // Routes!
     SharedModule,
-    StoreModule.forFeature('recipes', recipeReducer)
+    StoreModule.forFeature('recipes', recipeReducer),
+    EffectsModule.forFeature([RecipeEffects])
   ],
   declarations: [
     RecipesComponent,
